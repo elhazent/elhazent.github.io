@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Konfigurasi Bind Sebagai Server DNS Jaringan Pribadi Di Ubuntu 18.04 - elhazent.com</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="elhazent.com" property="og:site_name">
+  
+    <meta content="Konfigurasi Bind Sebagai Server DNS Jaringan Pribadi Di Ubuntu 18.04" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes." property="og:description">
+  
+  
+    <meta content="http://localhost:4000/Cara-Mengonfigurasi-BIND-sebagai-Server-DNS-Jaringan-Pribadi-di-Ubuntu-18.04/" property="og:url">
+  
+  
+    <meta content="2018-11-07T04:00:00+07:00" property="article:published_time">
+    <meta content="http://localhost:4000/about/" property="article:author">
+  
+  
+    <meta content="http://localhost:4000/assets/img/dns-bg.jpg" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="Productivity" property="article:tag">
+    
+    <meta content="Software" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@">
+  
+    <meta name="twitter:title" content="Konfigurasi Bind Sebagai Server DNS Jaringan Pribadi Di Ubuntu 18.04">
+  
+  
+    <meta name="twitter:url" content="http://localhost:4000/Cara-Mengonfigurasi-BIND-sebagai-Server-DNS-Jaringan-Pribadi-di-Ubuntu-18.04/">
+  
+  
+    <meta name="twitter:description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+  
+  
+    <meta name="twitter:image:src" content="http://localhost:4000/assets/img/dns-bg.jpg">
+  
+
+	<meta name="description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-touch-icon-144x144.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/avatar.jpeg" alt="ELHAZENT MEDIA"></a>
+      </div>
+      <div class="author-name">ELHAZENT MEDIA</div>
+      <p>someone who is trying to study hard</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+          <li><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        
+        
+          <li><a href="https://facebook.com/elhazent" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="github"><a href="http://github.com/elhazent" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="linkedin"><a href="https://in.linkedin.com/in/elhazent" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        
+        
+          <li class="email"><a href="mailto:meeannawwaf007@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2018 &copy; ELHAZENT MEDIA</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    <div class="page-cover-image">
+      <figure>
+        <img class="page-image" src=/assets/img/dns-bg.jpg alt="Konfigurasi Bind Sebagai Server DNS Jaringan Pribadi Di Ubuntu 18.04">
+        
+      </figure>
+    </div> <!-- End Page Cover Image -->
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Konfigurasi Bind Sebagai Server DNS Jaringan Pribadi Di Ubuntu 18.04</h1>
+        <div class="page-date"><span>2018, Nov 07&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <h3 id="pengertian">Pengertian</h3>
+
+<p>BIND adalah singkatan dari bahasa inggris dari Berkeley Internet Name Domain. Adalah salah satu software yang biasa digunakan untuk membuat, membangun dan mengatur sebuah DNS(Domain Name Server) pada sistem operasi linux. BIND awalnya dibuat oleh empat orang mahasiswa di CSRG Universitas California Berkeley dan pertama kali dirilis di dalam 4.3BSD. Paul Vixie kemudian meneruskan pengembangannya pada tahun 1988 saat bekerja di DEC.
+Bagian terpenting dari pengelolaan konfigurasi server dan infrastruktur termasuk cara mudah untuk mencari antarmuka jaringan dan alamat IP berdasarkan nama, Dengan menyiapkan Domain Name System (DNS) yang tepat. Menggunakan nama domain yang sepenuhnya memenuhi syarat (FQDN), bukan alamat IP, untuk menentukan alamat jaringan memudahkan konfigurasi layanan dan aplikasi, dan meningkatkan pemeliharaan file konfigurasi. Menyiapkan DNS kita sendiri untuk jaringan pribadi kita adalah cara yang bagus untuk meningkatkan pengelolaan server kita.</p>
+
+<h3 id="syarat-dan-ketentuan">Syarat Dan Ketentuan</h3>
+
+<p>Untuk menyelesaikan tutorial ini, kita akan memerlukan infrastruktur berikut. Buat setiap server di pusat data yang sama dengan jaringan pribadi yang diaktifkan:</p>
+
+<ul>
+  <li>Server Ubuntu 18.04 berfungsi sebagai server DNS Primer(utama), ns1</li>
+  <li>(Recomended) Server Ubuntu 18.04 kedua berfungsi sebagai server DNS Sekunder, ns2</li>
+  <li>Server tambahan di pusat data yang sama yang akan menggunakan server DNS Anda</li>
+</ul>
+
+<p>Pada masing-masing server ini, konfigurasikan akses administratif melalui pengguna sudo dan firewall dengan mengikuti panduan penyiapan awal server Ubuntu 18.04 kami.</p>
+
+<h3 id="install-bind-pada-server-dns">Install BIND Pada Server DNS</h3>
+
+<p>Pada kedua server, kita di anjurkan untuk memperbarui package kita dengan mengetikan :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get update
+</code></pre></div></div>
+
+<p>Setelah Update, Lalu kita install software yang kita butuhkan yaitu BIND :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get instal bind9
+</code></pre></div></div>
+
+<h3 id="setting-bind-ke-mode-ipv4">Setting BIND Ke Mode IPv4</h3>
+
+<p>Sebelum lanjutkan ke langkah selanjutnya, kita atur terlebih dahulu BIND-nya ke mode IPv4 karena jaringan pribadi menggunakan IPv4 secara ekslusif. Di kedua server, edit file pengaturan default bind9 dengan mengetikan :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo nano /etc/default/bind9
+</code></pre></div></div>
+
+<p>Tambahkan “-4” pada akhir parameter OPTIONS. Seperti dibawah ini :</p>
+
+<p>Save dan close kalau sudah selasai.</p>
+
+<p>Restart BIND dengan perintah :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo systemctl restart bind9
+</code></pre></div></div>
+
+<p>Sekarang BIND sudah terpasang, Mari kita ke langkah selanjutnya.</p>
+
+<h3 id="konfigurasi-server-dns-pertama-utama">Konfigurasi Server DNS Pertama (Utama)</h3>
+
+<p>Ada beberapa langkah pada konfigurasi server DNS pertama ini :</p>
+
+<ul>
+  <li><strong>Konfigurasi File Options</strong></li>
+</ul>
+
+<p>Buka file <code class="highlighter-rouge">named.conf.options</code> untuk di edit :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo nano /etc/bind/named.conf.options
+</code></pre></div></div>
+
+<p>Pada file diatas kita tambahkan text berikut sebelum <code class="highlighter-rouge">options</code> :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>acl "trusted" {
+    10.128.10.11;    # ns1 - can be set to localhost
+    10.128.20.12;    # ns2
+    10.128.100.101;  # host1
+    10.128.200.102;  # host2
+};
+</code></pre></div></div>
+
+<p>Lalu pada konfigurasi <code class="highlighter-rouge">options</code> kita tambahkan text berikut :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>options {
+    directory "/var/cache/bind";
+
+    recursion yes;                 # enables resursive queries
+    allow-recursion { trusted; };  # allows recursive queries from "trusted" clients
+    listen-on { **Ip Adress kita**; };   # ns1 private IP address - listen on private network only
+    allow-transfer { none; };      # disable zone transfers by default
+
+    forwarders {
+            8.8.8.8;
+            8.8.4.4;
+    };
+};
+</code></pre></div></div>
+
+<p>Ketika sudah selesai, save dan tutup file <code class="highlighter-rouge">named.conf.options</code>. Konfigurasi di atas menentukan bahwa hanya server kita sendiri (yang “tepercaya”) yang dapat meminta query server DNS kita untuk domain luar.</p>
+
+<p>Selanjutnya, kita akan mengkonfigurasi file lokal, untuk menentukan zona DNS kami.</p>
+
+<ul>
+  <li><strong>Konfigurasi File Local</strong></li>
+</ul>
+
+<p>Buka file <code class="highlighter-rouge">named.conf.local</code> untuk kita edit :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo nano /etc/bind/named.conf.local
+</code></pre></div></div>
+
+<p>masukan text berikut :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zone "nyc3.example.com" {
+type master;
+file "/etc/bind/zones/db.nyc3.example.com"; # zone file path
+allow-transfer { 10.128.20.12; };           # ns2 private IP address - secondary
+};
+
+zone "128.10.in-addr.arpa" {
+type master;
+file "/etc/bind/zones/db.10.128";  # 10.128.0.0/16 subnet
+allow-transfer { 10.128.20.12; };  # ns2 private IP address - secondary
+};
+</code></pre></div></div>
+
+<blockquote>
+  <p>Dengan asumsi bahwa subnet pribadi kami adalah 192.168.100.31, tambahkan zona reverse dengan dengan baris berikut (perhatikan bahwa nama zona reverse kami dimulai dengan “168.192” yang merupakan pembalikan oktet dari “192.168”).</p>
+</blockquote>
+
+<ul>
+  <li><strong>Membuat Lanjutan File Zona</strong>
+Lanjutan file zona adalah tempat kami menentukan catatan DNS untuk pencarian DNS ke depan. Yaitu, ketika DNS menerima query nama, “host1.nyc3.example.com” misalnya, DNS akan melihat dalam file zona lanjutan untuk menyelesaikan alamat IP pribadi host1.</li>
+</ul>
+
+<p>Mari kita buat direktori tempat file zona kita akan berada. Menurut konfigurasi named.conf.local kami, lokasi itu harus / etc / bind / zones:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo mkdir /etc/bind/zones
+</code></pre></div></div>
+
+<p>Kami akan mendasarkan file lanjutan zone kami pada file sample db.local zone. Salin ke lokasi yang tepat dengan perintah berikut:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo cp /etc/bind/db.local /etc/bind/zones/db.nyc3.example.com
+</code></pre></div></div>
+
+<p>Sekarang mari kita edit file forward zone kita:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo nano /etc/bind/zones/db.nyc3.example.com
+</code></pre></div></div>
+
+<p>Awalnya, akan terlihat seperti berikut:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$TTL    604800
+@       IN      SOA     localhost. root.localhost. (
+                          2         ; Serial
+                     604800         ; Refresh
+                      86400         ; Retry
+                    2419200         ; Expire
+                     604800 )       ; Negative Cache TTL
+;
+@       IN      NS      localhost.      ; delete this line
+@       IN      A       127.0.0.1       ; delete this line
+@       IN      AAAA    ::1             ; delete this line
+</code></pre></div></div>
+
+<p>Pertama, Hapus Seluruh isi file tersebut lalu kita ganti dengan text berikut :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$TTL    604800
+@       IN      SOA     ns1.nyc3.example.com. admin.nyc3.example.com. (
+              3     ; Serial
+         604800     ; Refresh
+          86400     ; Retry
+        2419200     ; Expire
+         604800 )   ; Negative Cache TTL
+;
+; name servers - NS records
+ IN      NS      ns1.nyc3.example.com.
+ IN      NS      ns2.nyc3.example.com.
+
+; name servers - A records
+ns1.nyc3.example.com.          IN      A       Ip Address kita
+ns2.nyc3.example.com.          IN      A       Ip Address kita
+
+; 10.128.0.0/16 - A records
+host1.nyc3.example.com.        IN      A      Ip Address kita
+host2.nyc3.example.com.        IN      A      Ip Address kita
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Membuat File Reverse Zone</strong></li>
+</ul>
+
+<p>File zona reverse adalah tempat kami menentukan catatan PTR DNS untuk pencarian DNS terbalik. Yaitu, ketika DNS menerima kueri berdasarkan alamat IP, “192.168.100.31” misalnya, akan terlihat dalam file zona reverse (s) untuk menyelesaikan FQDN yang sesuai, “host1.nyc3.example.com” dalam kasus ini .</p>
+
+<p>Pada ns1, untuk setiap reverse zone yang ditentukan dalam file named.conf.local, buat file reverse zone. Kami akan mendasarkan file zona reverse kami (s) pada file zona sampel db.167. Salin ke lokasi yang tepat dengan perintah berikut (mengganti nama file tujuan sehingga cocok dengan definisi zona reverse Anda):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo cp /etc/bind/db.127 /etc/bind/zones/db.10.128
+</code></pre></div></div>
+
+<p>Lalu kita rename file <code class="highlighter-rouge">db.10.128</code> menjadi <code class="highlighter-rouge">Ip subnet reverse</code>, Sebagai contoh punya kami ip subnetnya adalah 192.168, maka di balik menjadi 168.192,maka file tersebut diberi nama <code class="highlighter-rouge">db.192.168</code>.</p>
+
+<p>Kita edit file zona reverse tersebut dengan menghapus seluruh isi file dengan menggatinya dengan text berikut:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$TTL    604800
+@       IN      SOA     nyc3.example.com. admin.nyc3.example.com. (
+                          3         ; Serial
+                     604800         ; Refresh
+                      86400         ; Retry
+                    2419200         ; Expire
+                     604800 )       ; Negative Cache TTL
+; name servers
+  IN      NS      ns1.nyc3.example.com.
+  IN      NS      ns2.nyc3.example.com.
+
+; PTR Records
+11.10   IN      PTR     ns1.nyc3.example.com.    ; Ip Address kita
+12.20   IN      PTR     ns2.nyc3.example.com.    ; Ip Address kita
+101.100 IN      PTR     host1.nyc3.example.com.  ; Ip Address kita
+102.200 IN      PTR     host2.nyc3.example.com.  ; Ip Address kita
+</code></pre></div></div>
+
+<p>Setelah edit file zone reverse lalu kita cek file kita untuk mengetahui ada error atau tidak.</p>
+
+<ul>
+  <li><strong>Memeriksa Sintaks Konfigurasi BIND</strong></li>
+</ul>
+
+<p>Jalankan perintah berikut untuk memeriksa file <code class="highlighter-rouge">named.conf</code> :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo named-checkconf
+</code></pre></div></div>
+
+<p>Jika file <code class="highlighter-rouge">named.conf</code> kita tidak memiliki kesalahan sintaks, kita akan kembali ke prompt shell Anda dan tidak melihat pesan kesalahan. Jika ada masalah dengan file <code class="highlighter-rouge">named.conf</code>, periksa kembali kesalahan pada bagian “Konfigurasi DNS Server Utama”, kemudian jalankan kembali perintah di atas.</p>
+
+<p>Perintah bernama-checkzone dapat digunakan untuk memeriksa kebenaran file zona kita. Argumen pertamanya menentukan nama zona, dan argumen kedua menentukan file zona terkait, yang keduanya didefinisikan di <code class="highlighter-rouge">named.conf.local</code>.</p>
+
+<p>Sebagai contoh, untuk memeriksa “nyc3.example.com” konfigurasi zona lanjutan, jalankan perintah berikut (ubah nama untuk mencocokkan forward zone dan file kita):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo named-checkzone nyc3.example.com db.nyc3.example.com
+</code></pre></div></div>
+
+<p>Dan untuk memeriksa “128.10.in-addr.arpa” konfigurasi zona reverse, jalankan perintah berikut (ubah angka agar sesuai dengan zona reverse dan file Anda):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo named-checkzone 128.10.in-addr.arpa /etc/bind/zones/db.192.128
+</code></pre></div></div>
+
+<p>Ketika semua file konfigurasi dan zona kita tidak memiliki kesalahan di dalamnya, kita harus restart layanan BIND kalau sudah mengedit.</p>
+
+<ul>
+  <li><strong>Restart Layanan BIND</strong></li>
+</ul>
+
+<p>Restart BIND dengan mengetikan perintah berikut :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo systemctl restart bind9
+</code></pre></div></div>
+
+<p>Dan untuk mengaktifkan firewall kita jalankan perintah berikut :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo ufw allow Bind9
+</code></pre></div></div>
+
+<p>Server DNS utama Anda sekarang sudah siap dan siap untuk merespons permintaan DNS.</p>
+
+<h3 id="konfigurasi-dns-client">Konfigurasi DNS Client</h3>
+
+<p>Konfigurasi DNS client hanya dengan mengubah dns nya di file  <code class="highlighter-rouge">resolv.conf</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo nano /etc/resolv.conf
+</code></pre></div></div>
+
+<p>Lalu tambahkan text berikut :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nameserver Ip Address kita
+nameserver Ip Address kita
+search nyc3.example.com
+</code></pre></div></div>
+
+<h3 id="test-server">Test Server</h3>
+
+<p>Untuk mengetest apakah dns server kita berjalan atau tidak jalankan perintah berikut:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ping ns1.nyc3.example.com
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">ns1.nyc3.example.com</code> ini adalah file contoh yang saya buat.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Referensi :
+* https://id.wikipedia.org/wiki/BIND
+*https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-18-04
+* https://linuxacademy.com/cp/courses/lesson/course/1789/lesson/1/module/173
+</code></pre></div></div>
+
+      <div class="page-footer">
+        <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=Konfigurasi Bind Sebagai Server DNS Jaringan Pribadi Di Ubuntu 18.04&url=http://localhost:4000/Cara-Mengonfigurasi-BIND-sebagai-Server-DNS-Jaringan-Pribadi-di-Ubuntu-18.04/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=http://localhost:4000/Cara-Mengonfigurasi-BIND-sebagai-Server-DNS-Jaringan-Pribadi-di-Ubuntu-18.04/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=http://localhost:4000/Cara-Mengonfigurasi-BIND-sebagai-Server-DNS-Jaringan-Pribadi-di-Ubuntu-18.04/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div>
+        <div class="page-tag">
+          
+            <a href="/tags#Productivity" class="tag">&#35; Productivity</a>
+          
+            <a href="/tags#Software" class="tag">&#35; Software</a>
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//mr-brown.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

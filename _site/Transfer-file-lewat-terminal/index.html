@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Transfer File Atau Directory Lewat Terminal - elhazent.com</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="elhazent.com" property="og:site_name">
+  
+    <meta content="Transfer File Atau Directory Lewat Terminal" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes." property="og:description">
+  
+  
+    <meta content="http://localhost:4000/Transfer-file-lewat-terminal/" property="og:url">
+  
+  
+    <meta content="2018-10-30T04:00:00+07:00" property="article:published_time">
+    <meta content="http://localhost:4000/about/" property="article:author">
+  
+  
+    <meta content="http://localhost:4000/assets/img/Rsync-Over-SSH-Non-standard-Port.png" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="Productivity" property="article:tag">
+    
+    <meta content="Software" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@">
+  
+    <meta name="twitter:title" content="Transfer File Atau Directory Lewat Terminal">
+  
+  
+    <meta name="twitter:url" content="http://localhost:4000/Transfer-file-lewat-terminal/">
+  
+  
+    <meta name="twitter:description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+  
+  
+    <meta name="twitter:image:src" content="http://localhost:4000/assets/img/Rsync-Over-SSH-Non-standard-Port.png">
+  
+
+	<meta name="description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-touch-icon-144x144.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/avatar.jpeg" alt="ELHAZENT MEDIA"></a>
+      </div>
+      <div class="author-name">ELHAZENT MEDIA</div>
+      <p>someone who is trying to study hard</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+          <li><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        
+        
+          <li><a href="https://facebook.com/elhazent" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="github"><a href="http://github.com/elhazent" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="linkedin"><a href="https://in.linkedin.com/in/elhazent" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        
+        
+          <li class="email"><a href="mailto:meeannawwaf007@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2018 &copy; ELHAZENT MEDIA</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    <div class="page-cover-image">
+      <figure>
+        <img class="page-image" src=/assets/img/Rsync-Over-SSH-Non-standard-Port.png alt="Transfer File Atau Directory Lewat Terminal">
+        
+      </figure>
+    </div> <!-- End Page Cover Image -->
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Transfer File Atau Directory Lewat Terminal</h1>
+        <div class="page-date"><span>2018, Oct 30&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <p>System operasi linux sudah memprovide sebuah program yang bernama terminal atau juga sering di sebut dengan bash, Terminal atau bash banyak sekali fungsinya. Salah satunya yaitu untuk mengirim atau mengsinkronkan file dan directory pada satu lokasi atau server ke lokasi lain. Untuk GUI mungkin kita bisa menggunakan FileZilla. Tapi pada kali ini kita akan mensinkronkan file atau directory dengan terminal atau bash.</p>
+
+<p><strong>Mengubah Kepemilikan File Atau Directory</strong></p>
+
+<p>Pertama yang harus kita lakukan untuk mensinkronkan file atau directory adalah Mengubah Ownership atau kepemilikan file atau directory tersebut dari root ke nama user komputer kita agar kita bisa menjalankan data tersebut.</p>
+
+<p>Berikut perintah untuk mengubah ownership atau kepemilikan file atau directory :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $ chown -R (nama user : nama user) (nama file / directory)
+</code></pre></div></div>
+
+<p>Sebagai Contoh, Didalam dir /opt/ saya punya dir yang bernama ‘myapi’</p>
+
+<p><img src="/assets/img/ft-01.png" alt="Macbook" /></p>
+
+<p>Dir ‘myapi’ tersbut masih menggunakan sebagai root, saya akan mengubah dari root ke nama user saya dengan mengetikkan perintah berikut :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $ sudo chown -R mee:mee myapi
+</code></pre></div></div>
+
+<p>Maka berubahlah kepemilikan dir tersebut dari root ke user saya.</p>
+
+<p><img src="/assets/img/ft-02.png" alt="Macbook" /></p>
+
+<blockquote>
+  <p><em>NOTE</em> : -R tersebut untuk directory</p>
+</blockquote>
+
+<p>Kemudian setelah kita mengubah ownership maka kita siapkan file atau directory yang ingin kita sinkron atau kita kirim. Di sini saya akan mengirim file yang bernama “script.conf” ke komputer teman saya.</p>
+
+<p><img src="/assets/img/ft-03.png" alt="Macbook" /></p>
+
+<p>Untuk mensinkronkan atau mengirimkan file tersebut kita ketik perintah :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ scp script.conf dhia@192.168.100.20:/opt/myapi/scipt.conf
+</code></pre></div></div>
+
+<p>Dengan keterangan :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ scp (file yang ingin di kirim) user@ipadress:(dir tujuan)
+</code></pre></div></div>
+
+<p><img src="/assets/img/ft-04.png" alt="Macbook" /></p>
+
+<p>Ataua jika kita ingin menyamakan isi folder yang ada pada laptop/PC kita dengan laptop/PC tujuan atau mem back up foler yang kita punya ke laptop tujuan kita bisa menggunakan perintah di bawah ini :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rsync (file yang ingin dikirim) user(tujuan)@ipadress(tujuan):(dir tujuan)
+</code></pre></div></div>
+
+<blockquote>
+  <p><em>Note</em> : Jika kita ingin mengirimkan sebuah directory maka kita tambahkan perintah -r sebelum file yang ingin di kirim</p>
+</blockquote>
+
+<p>maka folder yang ada di laptop/pc tujuan akan sama dengan yang ada pada pc /laptop kita termasuk permission nya juga.</p>
+
+
+      <div class="page-footer">
+        <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=Transfer File Atau Directory Lewat Terminal&url=http://localhost:4000/Transfer-file-lewat-terminal/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=http://localhost:4000/Transfer-file-lewat-terminal/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=http://localhost:4000/Transfer-file-lewat-terminal/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div>
+        <div class="page-tag">
+          
+            <a href="/tags#Productivity" class="tag">&#35; Productivity</a>
+          
+            <a href="/tags#Software" class="tag">&#35; Software</a>
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//mr-brown.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>
