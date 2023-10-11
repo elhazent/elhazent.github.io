@@ -19,12 +19,7 @@
         // Fungsi untuk membuka Google Maps
         function myNavFunc() {
             // If it's an iPhone
-            if ((navigator.platform.indexOf("iPhone") != -1)
-                || (navigator.platform.indexOf("iPod") != -1)
-                || (navigator.platform.indexOf("iPad") != -1))
-                window.open("maps://https://maps.app.goo.gl/pW2JtHYo5HXWN4pk6");
-            else
-                window.open("https://maps.app.goo.gl/pW2JtHYo5HXWN4pk6");
+            window.open("external://https://maps.app.goo.gl/pW2JtHYo5HXWN4pk6");
         }
 
     </script>
