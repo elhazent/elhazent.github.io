@@ -10,6 +10,24 @@
 </head>
 
 <body>
+    <h1>Selamat datang di Halaman Web Google Maps</h1>
+
+    <!-- Tombol untuk membuka Google Maps -->
+    <button onclick="myNavFunc()">Buka Google Maps</button>
+
+    <script>
+        // Fungsi untuk membuka Google Maps
+        function myNavFunc() {
+            // If it's an iPhone
+            if ((navigator.platform.indexOf("iPhone") != -1)
+                || (navigator.platform.indexOf("iPod") != -1)
+                || (navigator.platform.indexOf("iPad") != -1))
+                window.open("maps://https://maps.app.goo.gl/pW2JtHYo5HXWN4pk6");
+            else
+                window.open("https://maps.app.goo.gl/pW2JtHYo5HXWN4pk6");
+        }
+
+    </script>
     <div id="json">
         {
         <ul class="obj collapsible">
