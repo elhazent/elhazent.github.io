@@ -22,9 +22,14 @@
     <script>
         // Fungsi untuk membuka Google Maps
         function myNavFuncMaps() {
-            // If it's an iPhone
-            window.open("plnmobile://modal/successful-email-verification");
-        }
+    try {
+        // Coba buka URL di aplikasi
+        window.open("plnmobile://modal/successful-email-verification");
+    } catch (e) {
+        // Jika gagal, buka Play Store
+        window.location.href = "https://play.google.com/store/apps/details?id=com.icon.pln123&hl=id";
+    }
+}
         function myNavFuncShopee() {
             // If it's an iPhone
             window.open("plnmobile://mkp");
