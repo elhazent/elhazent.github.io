@@ -1,104 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Nu'man Elhazent</title>
-    <meta name="author" content="Nu'man Elhazent" />
-    <link rel="stylesheet" charset="utf-8" media="all" href="https://dl.dropboxusercontent.com/s/etrruv60k6qnvs6/json.css" />
-    <script type="text/javascript" src="https://dl.dropboxusercontent.com/s/5wdgjb1o28h9fr2/json.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebView Decryption dari URL</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .box {
+            padding: 15px;
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 
 <body>
-    <a href="tel:*123%23">#224</a>
-<!--     <h1>Selamat datang di Halaman Web Google Maps</h1> -->
+    <h3>Data dari Flutter:</h3>
 
-    <!-- Tombol untuk membuka Google Maps -->
-<button onclick="myNavFuncMaps()">Buka Google Maps</button>
-    <button onclick="myNavFuncShopee()">Buka Shopee</button>
-    <button onclick="shopeePay()">Buka Shopee Langsung</button>
-    <button onclick="openGojek()">Buka Gojek</button>
+    <div class="label">Teks Terenkripsi (Dari URL):</div>
+    <div id="teksEnkripsi" class="box" style="background: #f0f0f0; border-color: #999;">Menunggu...</div>
+
+    <div class="label">Hasil Dekripsi:</div>
+    <div id="hasilDekripsi" class="box">Menunggu...</div>
 
     <script>
-        // Fungsi untuk membuka Google Maps
-        function myNavFuncMaps() {
-    var appUrl = "plnmobile://modal/successful-email-verification";
-    var fallbackUrl = "https://play.google.com/store/apps/details?id=com.icon.pln123&hl=id";
+        // Gunakan kunci rahasia yang sama dengan Flutter
+        const SECRET_KEY = "4D4UFBA5abaqdXKFCm0i0Aa9dOyYfKPy";
 
-    var timeout;
-    var iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-
-    // Jika URL tidak valid, maka alihkan ke Play Store
-    var checkValid = function() {
-        window.location.href = fallbackUrl;
-    };
-
-    // Set waktu tunggu jika aplikasi tidak terbuka
-    timeout = setTimeout(checkValid, 2000);
-
-    // Mencoba membuka URL di aplikasi
-    iframe.onload = function() {
-        clearTimeout(timeout); // Jika berhasil, batalkan pengalihan ke Play Store
-    };
-    
-    iframe.src = appUrl;
-    document.body.appendChild(iframe);
-}
-        function myNavFuncShopee() {
-            // If it's an iPhone
-            window.open("plnmobile://mkp");
-        }
-
-        function shopeePay(){
-            window.open("shopeeid://main?apprl=%2Frn%2FTRANSFER_PAGE%3Fnavigate_url%3Dhttps%253A%252F%252Fwsa.uat.wallet.airpay.co.id%252Fwallet%252Fpay%253Fmedium_index%253DdFhkbmR1bTBIamhWkFeZbUv6raeG3LkDA3nlkWYHDpt9L0_-9zJAHJPR0nFvqsEjGDQGvQcqWimXmrAc2lz50w%2526order_key%253D1tFiIom-xFK2xegYHlKjYuZkuab8s7r_5zw5Ldk-ta9il4lBwvWUrP7tx9JgWKfgXn1jW3-QFHxlEw%2526source%253Dqr%2526token%253DdFhkbmR1bTBIamhWkFeZbUv6raeG3LkDA3nlkWYHDpt9L0_-9zJAHJPR0nFvqsEjGDQGvQcqWimXmrAc2lz50w");
-        }
-
-        function openGojek(){
-            window.open("gojek://gopay/merchanttransfer?tref=A120231026082204aKmaQHU6oIID&amount=84500&activity=GP:RR&callback_url=plnmobile%3A%2F%2Fpayment-webview%3Furl%3Dhttps%3A%2F%2Fconnect-gateway.pln.co.id%2Fpay%2Fview%2Fcheck%3Fva%3D94PMPGPY2610231521501015099959061%26order_id%3D94PMPGPY2610231521501015099959061&callback_url=plnmobile%3A%2F%2Fpayment-webview%3Furl%3Dhttps%3A%2F%2Fconnect-gateway.pln.co.id%2Fpay%2Fview%2Fcheck%3Fva%3D94PMPGPY2610231521501015099959061");
-        }
-    </script>
-    <div id="json">
-        {
-        <ul class="obj collapsible">
-            <li>
-                <span class="prop"><span class="q">"</span>result<span class="q">"</span></span>: {
-                <ul class="obj collapsible">
-                    <li>
-                        <span class="prop"><span class="q">"</span>name<span class="q">"</span></span>:
-                        <span class="string">"Elhazent"</span>,
-                    </li>
-                    <li>
-                        <span class="prop"><span class="q">"</span>bio<span class="q">"</span></span>:
-                        <span class="string">"📱 Mobile Software Engineer"</span>,
-                    </li>
-                    <li>
-                        <span class="prop"><span class="q">"</span>email/phone<span class="q">"</span></span>:
-                        <span class="string">$ echo 'elhazent.mail@gmail.com' | '081233759694'</span>,
-                    </li>
-                    <li>
-                        <span class="prop"><span class="q">"</span>homepage<span class="q">"</span></span>:
-                        <a href="https://numandev.netlify.app/">https://numandev.netlify.app/</a>,
-                    </li>
-                    <li>
-                        <span class="prop"><span class="q">"</span>url<span class="q">"</span></span>: [
-                        <ul class="array collapsible">
-                            <li>
-                                <a href="https://www.linkedin.com/in/elhazent/">https://www.linkedin.com/in/elhazent</a>,
-                            </li>
-                            <li>
-                                <a href="https://www.instagram.com/nomannnnn_/">https://www.instagram.com/nomannnnn_</a>
-                            </li>
-
-                        </ul>
-                        ]
-                    </li>
-                </ul>
+        async function decryptAESGCM(base64Payload, secretKeyString) {
+            try {
+                const binaryString = atob(base64Payload);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
                 }
-            </li>
-        </ul>
+
+                const iv = bytes.slice(0, 12);
+                const ciphertext = bytes.slice(12);
+
+                const enc = new TextEncoder();
+                const keyMaterial = enc.encode(secretKeyString);
+                const cryptoKey = await crypto.subtle.importKey(
+                    "raw", keyMaterial, "AES-GCM", false, ["decrypt"]
+                );
+
+                const decryptedBuffer = await crypto.subtle.decrypt(
+                    { name: "AES-GCM", iv: iv }, cryptoKey, ciphertext
+                );
+
+                return new TextDecoder().decode(decryptedBuffer);
+            } catch (error) {
+                console.error(error);
+                return "❌ Gagal: Data rusak atau kunci salah!";
+            }
         }
-    </div>
+
+        // Otomatis berjalan saat halaman dimuat
+        window.onload = async () => {
+            // Membaca parameter URL (misal: ?data=xyz123)
+            const urlParams = new URLSearchParams(window.location.search);
+            const payloadDariUrl = urlParams.get('data');
+
+            if (payloadDariUrl) {
+                // Tampilkan teks terenkripsi asli di layar
+                document.getElementById("teksEnkripsi").innerText = payloadDariUrl;
+
+                // Mulai dekripsi
+                const hasil = await decryptAESGCM(payloadDariUrl, SECRET_KEY);
+                document.getElementById("hasilDekripsi").innerText = hasil;
+            } else {
+                document.getElementById("teksEnkripsi").innerText = "Tidak ada parameter ?data= di URL";
+                document.getElementById("hasilDekripsi").innerText = "-";
+            }
+        };
+    </script>
 </body>
 
 </html>
